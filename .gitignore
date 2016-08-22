@@ -1,4 +1,6 @@
 # Windows image file caches
+.idea
+vendor
 Thumbs.db
 ehthumbs.db
 
