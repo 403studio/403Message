@@ -5,9 +5,9 @@
  * Copyright: 403studio<https://github.com/403studio>
  */
 
-namespace Studio403;
+namespace Message403;
 
-use Studio403\MessageHandler\MessageHandlerInterface;
+use Message403\MessageHandler\MessageHandlerInterface;
 
 
 class Message

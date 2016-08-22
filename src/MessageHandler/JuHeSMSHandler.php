@@ -5,10 +5,10 @@
  * Copyright: 403studio<https://github.com/403studio>
  */
 
-namespace Studio403\MessageHandler;
+namespace Message403\MessageHandler;
 
 use Curl\Curl;
-use Studio403\MessageHandler\MessageHandlerInterface;
+use Message403\MessageHandler\MessageHandlerInterface;
 
 
 class JuHeSMSHandler implements MessageHandlerInterface

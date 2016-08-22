@@ -5,7 +5,7 @@
  * Copyright: 403studio<https://github.com/403studio>
  */
 
-namespace Studio403\Message;
+namespace Message403\Message;
 
 
 interface MessageInterface
