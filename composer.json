@@ -1,6 +1,6 @@
 {
   "name": "403studio/message403",
-  "description": "description_text",
+  "description": "Send message from backend use sms, email, wechat, websockt",
   "minimum-stability": "stable",
   "license": "proprietary",
   "homepage": "https://github.com/403studio/403Message",
