@@ -1,22 +1,24 @@
 <?php
 /**
- * Project: 403Message
+ * Project: MessageSender
  * Author: hao.huang<hao.huang@aliyun.com>
  * Copyright: 403studio<https://github.com/403studio>
  */
 
-namespace Message403\MessageHandler;
+namespace MessageSender\MessageHandler;
 
 use Curl\Curl;
-use Message403\MessageHandler\MessageHandlerInterface;
+use MessageSender\MessageHandler\MessageHandlerInterface;
+use MessageSender\Support\Collection;
 
 
 class JuHeSMSHandler implements MessageHandlerInterface
 {
     private $curl;
+    protected $requiredArr = ['mobile', 'tpl_id'];
     protected $configArr = array();
 
-    public function __construct(array $optionArr, $type)
+    public function __construct(array $optionArr)
     {
         $this->curl = new Curl();
         $this->configArr = $optionArr;
@@ -27,7 +29,21 @@ class JuHeSMSHandler implements MessageHandlerInterface
 
     }
 
-    public function sendByTemplate($message, $template, array $option = array())
+    public function __call($name, $arguments)
+    {
+        $mapArr = array(
+            'to' => 'mobile',
+            'mobile' => 'mobile',
+            'tpl_id' => 'tpl_id',
+            'template' => 'tpl_id',
+        );
+        if (isset($mapArr[$name])) {
+            $this->configArr[$mapArr[$name]] = array_shift($arguments);
+        }
+        return $this;
+    }
+
+    public function sendByTemplate($message, $template = null, array $option = array())
     {
         $tpl_value = '';
         if (is_array($message)) {
@@ -35,6 +51,7 @@ class JuHeSMSHandler implements MessageHandlerInterface
                 $tpl_value .= '#'.$key.'#='.$value.'&';
             }
         }
+        $template = is_null($template) ? $this->configArr['tpl_id'] : $template;
         $arr = array('tpl_id' => $template, 'tpl_value' => urlencode($tpl_value));
         $arr = array_merge($this->configArr, $arr);
         $request = '';
@@ -42,7 +59,7 @@ class JuHeSMSHandler implements MessageHandlerInterface
             $request .= $key.'='.$value.'&';
         }
         $this->curl->get($this->configArr['appUrl'], $arr);
-        $request = json_decode($this->curl->response);
-        var_dump(json_decode($this->curl->response));
+        $result = json_decode($this->curl->response, true);
+        return new Collection($result);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * Project: 403Message
+ * Project: MessageSender
  * Author: hao.huang<hao.huang@aliyun.com>
  * Copyright: 403studio<https://github.com/403studio>
  */
 
-namespace Message403\MessageHandler;
+namespace MessageSender\MessageHandler;
 
 class SwiftMailerHandler implements MessageHandlerInterface
 {

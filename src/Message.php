@@ -5,9 +5,9 @@
  * Copyright: 403studio<https://github.com/403studio>
  */
 
-namespace Message403;
+namespace MessageSender;
 
-use Message403\MessageHandler\MessageHandlerInterface;
+use MessageSender\MessageHandler\MessageHandlerInterface;
 
 
 class Message
@@ -16,9 +16,12 @@ class Message
     const WECHAT = 2;
     const EMAIL = 3;
     const WEBSOCKET = 4;
+    public $resut;
 
-    protected static $type = array(
+    protected static $messageType = array(
         self::SMS => 'SMS',
+        self::WECHAT => 'WECHAT',
+        self::EMAIL => 'EMAIL',
     );
 
     protected $handlerArr = array();
@@ -28,15 +31,18 @@ class Message
 
     }
 
-    public function pushHandler(MessageHandlerInterface $handler)
+    public function pushHandler(MessageHandlerInterface $handler, $type)
     {
-        array_unshift($this->handlerArr, $handler);
+        array_unshift($this->handlerArr, array('handler' => $handler, 'type' => $type));
     }
 
-    public function sendByTemplate($message, $template, array $option = array())
+    public function sendByTemplate($message, $template = null, array $option = array())
     {
         while ($handler = current($this->handlerArr)) {
-            $handler->sendByTemplate($message, $template, $option);
+            $type = $handler['type'];
+            $result = $handler['handler']->sendByTemplate($message[$type], $template, $option);
+            $resultKey = self::$messageType[$type];
+            $this->resut[$resultKey] = $result;
             next($this->handlerArr);
         }
     }

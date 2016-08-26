@@ -1,9 +1,9 @@
 {
-  "name": "403studio/message403",
+  "name": "403studio/messagesender",
   "description": "Send message from backend use sms, email, wechat, websockt",
   "minimum-stability": "dev",
   "license": "proprietary",
-  "homepage": "https://github.com/403studio/403Message",
+  "homepage": "https://github.com/403studio/MessageSender",
   "authors": [
     {
       "name": "hao.huang",
@@ -15,11 +15,12 @@
   "require": {
     "curl/curl": "1.4.0",
     "overtrue/wechat": "3.1.3",
-    "swiftmailer/swiftmailer": "^5.4"
+    "swiftmailer/swiftmailer": "^5.4",
+    "workerman/phpsocket.io": "^1.0"
   },
   "autoload": {
   	"psr-4": {
-  		"Message403\\": "src"
+  		"MessageSender\\": "src"
   	}
   }
 }
